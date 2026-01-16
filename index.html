@@ -180,7 +180,24 @@
         /* 狀態樣式 */
         .correct-bg { background-color: var(--correct) !important; color: white !important; border-color: var(--correct) !important; }
         .wrong-bg { background-color: var(--wrong) !important; color: white !important; border-color: var(--wrong) !important; }
+		
+		h1 {
+			color: var(--primary);
+			margin-bottom: 10px;
+			font-size: 1.5rem; /* 在手機上調整適當的大小 */
+		}
 
+	/* 針對手機（螢幕寬度小於 480px）微調 */
+	@media (max-width: 480px) {
+		h1 {
+			font-size: 1.2rem; /* 標題再小一點點 */
+			margin-top: 5px;
+		}
+		.status-bar {
+			font-size: 14px; /* 分數那行也稍微縮小 */
+		}
+	}
+		
     </style>
 </head>
 <body>
@@ -191,8 +208,9 @@
     </div>
 
     <div class="container" id="game-container" style="display: none;">
+		<h1>一秒猜歌GFRIEND版</h1>
+		<span>聲音可能有點大請注意音量</span>
         <div class="status-bar">
-			<h1>一秒猜歌GFRIEND版</h1>
             <span id="progress-text">第 1 / 20 題</span>
             <span id="score-text">得分: 0</span>
         </div>
@@ -339,7 +357,7 @@
 
             for (let i = 0; i < songRequests.length; i++) {
                 const term = songRequests[i].trim();
-                loadingText.innerHTML = `進度: ${Math.round((i / songRequests.length) * 100)}%`;
+                loadingText.innerHTML = `Loading: ${Math.round((i / songRequests.length) * 100)}%`;
                 
                 try {
                     let finalTrack = null;
@@ -347,7 +365,7 @@
                     // 判斷是否為純數字 (Track ID 模式)
                     if (/^\d+$/.test(term)) {
                         // 使用 lookup API 直接抓取 ID
-                        const res = await fetch(`https://itunes.apple.com/lookup?id=${term}&country=TW`);
+                        const res = await fetch(`https://itunes.apple.com/lookup?id=${term}&country=KR`);
                         const data = await res.json();
                         if (data.resultCount > 0) {
                             finalTrack = data.results[0];
